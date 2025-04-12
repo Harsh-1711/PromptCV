@@ -33,3 +33,15 @@ ai-service/*.pyc
 # Misc
 *.tgz
 *.swp
+
+# Python virtual environment
+ai-service/venv/
+# or more generally
+**/venv/
+
+# Python caches
+**/__pycache__/
+**/*.pyc
+
+# Env files in all folders
+**/.env
