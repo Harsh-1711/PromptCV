@@ -65,6 +65,7 @@ npm install
 
 ### 🔧 Setting Up Virtual Environment
 
+```bash
 # 1. Navigate to the ai-service folder
 
 cd ai-service
@@ -86,6 +87,7 @@ source venv/bin/activate
 # 4. Install dependencies
 
 pip install -r requirements.txt
+```
 
 ### Run the app
 
