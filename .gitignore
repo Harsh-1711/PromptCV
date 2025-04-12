@@ -1,0 +1,35 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Build outputs
+client/dist/
+client/.vite/
+server/dist/
+ai-service/__pycache__/
+ai-service/*.pyc
+
+# IDE files
+.vscode/
+.idea/
+
+# Misc
+*.tgz
+*.swp

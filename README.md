@@ -34,6 +34,21 @@ git clone https://github.com/Harsh-1711/LegalEase.git
 cd LegalEase
 ```
 
+### Setup .env files
+
+```bash
+#In the client folder (client/.env)
+VITE_API_URL=http://localhost:8080
+
+#In the server folder(server/config/.env)
+PORT=8080
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+
+#In the Ai-Service (ai-service/.env)
+GEMINI_API_KEY=your_gemini_api_key
+```
+
 ### Install server dependencies
 
 ```bash
@@ -48,6 +63,13 @@ cd ../client
 npm install
 ```
 
+### Install AI-Services dependencies
+
+```bash
+cd ../ai-service
+pip install -r requirements.txt
+```
+
 ### Run the app
 
 ```bash
@@ -55,7 +77,7 @@ npm install
 npm start
 
 # In the client folder (in a new terminal)
-npm run dev
+npm start
 ```
 
 ---
