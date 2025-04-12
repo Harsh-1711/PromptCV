@@ -89,4 +89,4 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 - [Langchain](https://www.langchain.com/)
 - [Gemini AI](https://deepmind.google/technologies/gemini/)
-- [PDF-Parse] (https://www.npmjs.com/package/pdf-parse)
+- [PDF Parse](https://www.npmjs.com/package/pdf-parse)
