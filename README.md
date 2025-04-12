@@ -63,12 +63,29 @@ cd ../client
 npm install
 ```
 
-### Install AI-Services dependencies
+### 🔧 Setting Up Virtual Environment
 
-```bash
-cd ../ai-service
+# 1. Navigate to the ai-service folder
+
+cd ai-service
+
+# 2. Create a virtual environment (you can name it "venv" or anything)
+
+python -m venv venv
+
+# 3. Activate the virtual environment
+
+# On Windows:
+
+venv\Scripts\activate
+
+# On macOS/Linux:
+
+source venv/bin/activate
+
+# 4. Install dependencies
+
 pip install -r requirements.txt
-```
 
 ### Run the app
 
@@ -78,9 +95,10 @@ npm start
 
 # In the client folder (in a new terminal)
 npm start
-```
 
----
+# Run the Python service
+python main.py
+```
 
 ## 📂 Project Structure
 
