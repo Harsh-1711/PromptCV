@@ -1,25 +1,26 @@
-# PromptCV – AI-Powered Resume Optimizer 🚀
+# LegalEase – AI-Powered Legal Document Assistant ⚖️
 
-**PromptCV** is a smart web application that uses AI (powered by Gemini or Langchain) to help users improve their resumes and check their ATS (Applicant Tracking System) score to boost hiring success.
+**LegalEase** is a powerful AI-driven web app that helps users understand, analyze, and create legal documents. Powered by Gemini or Langchain, it enables users to summarize legal terms, generate contracts, and detect risky clauses – all in plain English.
 
 ---
 
 ## 🔍 Features
 
-- ✅ Intelligent resume suggestions using AI  
-- 📊 ATS score checker to evaluate resume compatibility  
-- 🔍 Keyword matching with job descriptions  
-- 📄 Upload and analyze resumes (PDF/Text)  
-- 📥 Export improved resume (coming soon)  
+- 📄 Upload & summarize legal documents (PDF/Text)
+- 🧠 Plain-English legal Q&A powered by LLMs
+- 📝 Smart contract generation for NDAs, Freelance Agreements, and more
+- ⚠️ Clause risk detection with suggestions
+- 🗂 Save and revisit uploaded documents (coming soon)
+- 📥 Download generated documents
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React.js (Vite)  
-- **Backend:** Node.js, Express.js  
-- **AI Layer:** Langchain, Gemini API (or OpenAI)  
-- **Database:** MongoDB  
+- **Frontend:** React.js (Vite)
+- **Backend:** Node.js, Express.js
+- **AI Layer:** Langchain, Gemini API
+- **Database:** MongoDB
 - **Hosting:** Coming soon...
 
 ---
@@ -29,8 +30,8 @@
 ### Clone the repository
 
 ```bash
-git clone https://github.com/Harsh-1711/PromptCV.git
-cd PromptCV
+git clone https://github.com/Harsh-1711/LegalEase.git
+cd LegalEase
 ```
 
 ### Install server dependencies
@@ -62,7 +63,8 @@ npm run dev
 ## 📂 Project Structure
 
 ```
-PromptCV/
+LegalEase/
+├── ai-service       # LLM using Gemini
 ├── client/          # Frontend React App
 ├── server/          # Backend with Express + AI logic
 ├── LICENSE
@@ -85,6 +87,6 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 
 ## 🙌 Acknowledgements
 
-- [Langchain](https://www.langchain.com/)  
-- [Gemini AI](https://deepmind.google/technologies/gemini/)  
-- [OpenAI](https://openai.com/)  
+- [Langchain](https://www.langchain.com/)
+- [Gemini AI](https://deepmind.google/technologies/gemini/)
+- [PDF Parse] (https://www.npmjs.com/package/pdf-parse)
