@@ -1,134 +1,127 @@
-# LegalEase – AI-Powered Legal Document Assistant ⚖️
+# PromptCV – AI-Powered Resume Analyzer 🤖📄
 
-**LegalEase** is a powerful AI-driven web app that helps users understand, analyze, and create legal documents. Powered by Gemini or Langchain, it enables users to summarize legal terms, generate contracts, and detect risky clauses – all in plain English.
+**PromptCV** is an AI-powered resume analysis platform that checks your resume's ATS compatibility, highlights strengths and weaknesses, and offers intelligent, personalized suggestions to help you get noticed by recruiters. Built with a Python backend and a modern React + TypeScript frontend.
 
 ---
 
-## 🔍 Features
+## ✨ Features
 
-- 📄 Upload & summarize legal documents (PDF/Text)
-- 🧠 Plain-English legal Q&A powered by LLMs
-- 📝 Smart contract generation for NDAs, Freelance Agreements, and more
-- ⚠️ Clause risk detection with suggestions
-- 🗂 Save and revisit uploaded documents (coming soon)
-- 📥 Download generated documents
+- 📄 Upload and analyze resumes (PDF/Text)
+- 🧠 AI-generated feedback on key sections like Skills, Experience, and Education
+- ✅ ATS (Applicant Tracking System) compatibility scoring
+- 💡 Smart suggestions to improve your resume's impact
+- 📊 Visual breakdowns with charts and progress bars
+- 📥 Downloadable analysis report 
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React.js (Vite)
-- **Backend:** Node.js, Express.js
-- **AI Layer:** Langchain, Gemini API
+- **Frontend:** React (Vite, TypeScript, TailwindCSS, ShadCN)
+- **Backend:** Python (FastAPI or Flask)
+- **AI Layer:** Gemini API or Langchain
+- **PDF Parsing:** PyMuPDF
+- **Authentication:** JWT 
 - **Database:** MongoDB
-- **Hosting:** Coming soon...
 
 ---
 
 ## 🚀 Getting Started
 
-### Clone the repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Harsh-1711/LegalEase.git
-cd LegalEase
+git clone https://github.com/Harsh-1711/PromptCV.git
+cd PromptCV
 ```
 
-### Setup .env files
+---
 
-```bash
-#In the client folder (client/.env)
-VITE_API_URL=http://localhost:8080
+### 2. Setup the `.env` File (in `server/`)
 
-#In the server folder(server/config/.env)
-PORT=8080
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-
-#In the Ai-Service (ai-service/.env)
-GEMINI_API_KEY=your_gemini_api_key
+```env
+# server/.env
+GEMINI_API_KEY=your_gemini_api_key_here
+PORT=8000
 ```
 
-### Install server dependencies
+---
+
+### 3. Install Backend Dependencies
 
 ```bash
 cd server
-npm install
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-### Install client dependencies
+---
+
+### 4. Run the Python Backend
+
+```bash
+uvicorn main:app --reload  # Or python main.py based on your framework
+```
+
+---
+
+### 5. Setup Frontend
 
 ```bash
 cd ../client
 npm install
+npm run dev
 ```
 
-### 🔧 Setting Up Virtual Environment
-
-```bash
-# 1. Navigate to the ai-service folder
-
-cd ai-service
-
-# 2. Create a virtual environment (you can name it "venv" or anything)
-
-python -m venv venv
-
-# 3. Activate the virtual environment
-
-# On Windows:
-
-venv\Scripts\activate
-
-# On macOS/Linux:
-
-source venv/bin/activate
-
-# 4. Install dependencies
-
-pip install -r requirements.txt
-```
-
-### Run the app
-
-```bash
-# In the server folder
-npm start
-
-# In the client folder (in a new terminal)
-npm start
-
-# Run the Python service
-python main.py
-```
+---
 
 ## 📂 Project Structure
 
 ```
-LegalEase/
-├── ai-service       # LLM using Gemini
-├── client/          # Frontend React App
-├── server/          # Backend with Express + AI logic
-├── LICENSE
-└── README.md
+PromptCV/
+├── client/             # React + TSX frontend
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       └── ...
+├── server/             # Python backend with AI logic
+│   ├── main.py
+│   ├── resume_parser.py
+│   ├── ats_scoring.py
+│   ├── suggestions.py
+│   ├── utils/
+│   └── .env
+├── README.md
+└── requirements.txt
 ```
+
+---
+
+## ⚙️ Example API Endpoints
+
+- `POST /upload` → Upload and parse resume
+- `POST /analyze` → Run AI scoring and suggestion engine
+- `GET /score/:id` → Retrieve score breakdown
+- `GET /download/:id` → Download resume report (coming soon)
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! For major changes, please open an issue first to discuss the proposed changes.
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
 
 ---
 
 ## 🙌 Acknowledgements
 
-- [Langchain](https://www.langchain.com/)
-- [Gemini AI](https://deepmind.google/technologies/gemini/)
-- [PDF Parse](https://www.npmjs.com/package/pdf-parse)
+- [Gemini API](https://deepmind.google/technologies/gemini/)
+- [LangChain](https://www.langchain.com/)
+- [PyMuPDF](https://pymupdf.readthedocs.io/)
+- [ShadCN UI](https://ui.shadcn.dev/)
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you'd like to change.
