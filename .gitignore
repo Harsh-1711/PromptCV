@@ -23,8 +23,8 @@ Thumbs.db
 client/dist/
 client/.vite/
 server/dist/
-ai-service/__pycache__/
-ai-service/*.pyc
+server/__pycache__/
+server/*.pyc
 
 # IDE files
 .vscode/
@@ -35,7 +35,7 @@ ai-service/*.pyc
 *.swp
 
 # Python virtual environment
-ai-service/venv/
+server/venv/
 # or more generally
 **/venv/
 
