@@ -22,8 +22,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Header from "@/components/Header";
-import { LogIn, User, Eye, EyeOff } from "lucide-react";
-import React from "react";
+import { LogIn, Eye, EyeOff } from "lucide-react";
+import React, { useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { GoogleAuthProvider, signInWithRedirect, getRedirectResult, fetchSignInMethodsForEmail } from "firebase/auth";
+import { auth } from "@/config/firebase";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -36,7 +39,9 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -45,18 +50,64 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (data: LoginFormValues) => {
-    // In a real app, this would be an API call
-    console.log("Login attempt with:", data);
-
-    // Mock successful login for demo purposes
-    toast.success("Login successful!");
-    navigate("/");
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      setIsLoading(true);
+      await login(data.email, data.password);
+      toast.success("Login successful!");
+      navigate("/");
+    } catch (error: any) {
+      // console.error("Login error:", error);
+      toast.error("Invalid credentials");
+      form.setValue('password', '');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    // In a real app, this would integrate with Google Auth
-    toast.success("Google authentication would be integrated here");
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          toast.success("Login successful!");
+          navigate("/");
+        }
+      } catch (error: any) {
+        console.error("Google sign-in error:", error);
+        const errorMessage = error?.message || '';
+        
+        if (errorMessage.toLowerCase().includes('popup')) {
+          toast.error('Sign-in was cancelled. Please try again');
+        } else if (errorMessage.toLowerCase().includes('unauthorized')) {
+          toast.error('This domain is not authorized. Please contact support');
+        } else {
+          toast.error('Failed to login with Google. Please try again');
+        }
+      }
+    };
+
+    handleRedirectResult();
+  }, [navigate]);
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      const provider = new GoogleAuthProvider();
+      await signInWithRedirect(auth, provider);
+    } catch (error: any) {
+      console.error("Google sign-in error:", error);
+      const errorMessage = error?.message || '';
+      
+      if (errorMessage.toLowerCase().includes('popup')) {
+        toast.error('Sign-in was cancelled. Please try again');
+      } else if (errorMessage.toLowerCase().includes('unauthorized')) {
+        toast.error('This domain is not authorized. Please contact support');
+      } else {
+        toast.error('Failed to login with Google. Please try again');
+      }
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -121,8 +172,9 @@ const Login = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full">
-                    <LogIn className="mr-2 h-4 w-4" /> Sign In
+                  <Button type="submit" className="w-full" disabled={isLoading}>
+                    <LogIn className="mr-2 h-4 w-4" /> 
+                    {isLoading ? "Signing in..." : "Sign In"}
                   </Button>
                 </form>
               </Form>
@@ -143,22 +195,22 @@ const Login = () => {
                 type="button"
                 onClick={handleGoogleSignIn}
                 className="w-full"
+                disabled={isLoading}
               >
                 <svg
                   className="mr-2 h-4 w-4"
+                  aria-hidden="true"
+                  focusable="false"
+                  data-prefix="fab"
+                  data-icon="google"
+                  role="img"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  viewBox="0 0 488 512"
                 >
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M8 12 h8" />
-                  <path d="M12 8 v8" />
+                  <path
+                    fill="currentColor"
+                    d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
+                  ></path>
                 </svg>
                 Google
               </Button>
