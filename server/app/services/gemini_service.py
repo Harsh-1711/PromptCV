@@ -12,26 +12,52 @@ def get_resume_suggestions(original_heading, section_text):
         google_api_key=os.getenv("GEMINI_API_KEY"),
     )
 
-    prompt_template = """Analyze this resume section for ATS compatibility:
+    prompt_template = """Analyze this resume section for ATS compatibility and provide detailed feedback:
 
     Original Heading: {heading}
     Content: {content}
 
+    Evaluate based on these criteria (provide scores for each):
+    1. Keyword Optimization (0-20 points)
+       - Industry-specific keywords
+       - Job title relevance
+       - Technical skills alignment
+    2. Content Structure (0-20 points)
+       - Clear organization
+       - Proper formatting
+       - Logical flow
+    3. Achievement Quantification (0-20 points)
+       - Use of metrics and numbers
+       - Impact statements
+       - Results-oriented language
+    4. Action Verb Usage (0-20 points)
+       - Strong action verbs
+       - Present/past tense consistency
+       - Active voice
+    5. Relevance & Impact (0-20 points)
+       - Job description alignment
+       - Career progression
+       - Value proposition
+
     Provide:
-    1. Overall ATS compatibility score (0-100) based on:
-    2. Improved heading suggestion (if needed)
-       - Keyword optimization
-       - Clear section structure
-       - Quantifiable achievements
-       - Action verb usage
-       - Relevance to job description
+    1. Overall ATS Score (sum of all criteria)
+    2. Detailed breakdown of scores for each criterion
+    3. Improved heading suggestion (if needed)
+    4. Specific recommendations for improvement
 
     Format response as (dont add any special character in the response just add bullets if required):
     ATS Score: [XX/100]
-    All Suggested Headings: [Improved heading]
-    Suggestions:
-    - [Suggestion 1]
-    - [Suggestion 2]
+    Score Breakdown:
+    - Keyword Optimization: [X/20]
+    - Content Structure: [X/20]
+    - Achievement Quantification: [X/20]
+    - Action Verb Usage: [X/20]
+    - Relevance & Impact: [X/20]
+    Suggested Heading: [Improved heading]
+    Recommendations:
+    - [Recommendation 1]
+    - [Recommendation 2]
+    - [Recommendation 3]
     """
 
     prompt = PromptTemplate(
@@ -45,28 +71,41 @@ def get_resume_suggestions(original_heading, section_text):
         "content": section_text
     })
 
-    # print("Full Response: ", response)
-
     try:
+        # Extract overall ATS score
         ats_score_match = re.search(r"ATS Score:\s*(\d+)", response)
         ats_score = int(ats_score_match.group(1)) if ats_score_match else 0
 
+        # Extract score breakdown
+        score_breakdown = {}
+        for criterion in ["Keyword Optimization", "Content Structure", "Achievement Quantification", 
+                         "Action Verb Usage", "Relevance & Impact"]:
+            score_match = re.search(rf"{criterion}:\s*(\d+)/20", response)
+            score_breakdown[criterion] = int(score_match.group(1)) if score_match else 0
+
+        # Extract suggested heading
         suggested_heading_match = re.search(r"Suggested Heading:\s*(.+)", response)
         suggested_heading = suggested_heading_match.group(1) if suggested_heading_match else original_heading
 
-        suggestions = re.findall(r"-\s*(.+?)(?=\n-|\n$)", response, re.DOTALL)
-        if not isinstance(suggestions, list): 
-            suggestions = []
+        # Extract recommendations
+        recommendations = re.findall(r"-\s*(.+?)(?=\n-|\n$)", response, re.DOTALL)
+        if not isinstance(recommendations, list):
+            recommendations = []
+
     except (AttributeError, ValueError) as e:
         print(f"Error parsing response: {e}")
         suggested_heading = original_heading
         ats_score = 0
-        suggestions = ["Failed to parse suggestions"]
+        score_breakdown = {criterion: 0 for criterion in ["Keyword Optimization", "Content Structure", 
+                                                        "Achievement Quantification", "Action Verb Usage", 
+                                                        "Relevance & Impact"]}
+        recommendations = ["Failed to parse suggestions"]
 
     return {
         "original_heading": original_heading,
         "suggested_heading": suggested_heading,
         "ats_score": ats_score,
-        "suggestions": suggestions,  
-        "section_preview": section_text[:100] 
+        "score_breakdown": score_breakdown,
+        "recommendations": recommendations,
+        "section_preview": section_text[:100]
     }
