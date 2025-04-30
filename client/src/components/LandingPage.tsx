@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ResumeUpload from "./ResumeUpload";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
 const LandingPage: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-
   const handleCardHover = (cardId: string) => {
     setHoveredCard(cardId);
   };
@@ -24,9 +23,9 @@ const LandingPage: React.FC = () => {
         "5 Resume Analyses",
         "Basic ATS Score",
         "General Suggestions",
-        "PDF Report Download"
+        "PDF Report Download",
       ],
-      buttonText: "Get Started"
+      buttonText: "Get Started",
     },
     {
       id: "professional",
@@ -38,10 +37,10 @@ const LandingPage: React.FC = () => {
         "Detailed ATS Score",
         "Industry-Specific Suggestions",
         "Detailed PDF Report",
-        "Priority Support"
+        "Priority Support",
       ],
       buttonText: "Get Started",
-      popular: true
+      popular: true,
     },
     {
       id: "enterprise",
@@ -54,11 +53,19 @@ const LandingPage: React.FC = () => {
         "Custom Industry Templates",
         "Bulk Analysis",
         "Dedicated Support",
-        "API Access"
+        "API Access",
       ],
-      buttonText: "Contact Sales"
-    }
+      buttonText: "Contact Sales",
+    },
   ];
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
@@ -199,9 +206,12 @@ const LandingPage: React.FC = () => {
       <section id="pricing" className="py-20 bg-muted/50">
         <div className="container max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <h2 className="text-3xl font-bold mb-4">
+              Simple, Transparent Pricing
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Choose the plan that best fits your needs. All plans include our core features.
+              Choose the plan that best fits your needs. All plans include our
+              core features.
             </p>
           </div>
 
@@ -226,7 +236,9 @@ const LandingPage: React.FC = () => {
                 )}
                 <div className="mb-6">
                   <h3 className="text-2xl font-bold mb-2">{card.title}</h3>
-                  <p className="text-muted-foreground mb-4">{card.description}</p>
+                  <p className="text-muted-foreground mb-4">
+                    {card.description}
+                  </p>
                   <div className="flex items-baseline">
                     <span className="text-4xl font-bold">{card.price}</span>
                     <span className="text-muted-foreground ml-2">/month</span>
@@ -240,9 +252,11 @@ const LandingPage: React.FC = () => {
                     </li>
                   ))}
                 </ul>
-                <Button className={`w-full ${
-                  hoveredCard === card.id ? "bg-primary/90" : ""
-                }`}>
+                <Button
+                  className={`w-full ${
+                    hoveredCard === card.id ? "bg-primary/90" : ""
+                  }`}
+                >
                   {card.buttonText}
                 </Button>
               </div>
