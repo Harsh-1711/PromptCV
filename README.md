@@ -6,23 +6,32 @@
 
 ## ✨ Features
 
-- 📄 Upload and analyze resumes (PDF/Text)
+- 📄 Upload and analyze resumes (PDF format)
 - 🧠 AI-generated feedback on key sections like Skills, Experience, and Education
 - ✅ ATS (Applicant Tracking System) compatibility scoring
 - 💡 Smart suggestions to improve your resume's impact
 - 📊 Visual breakdowns with charts and progress bars
-- 📥 Downloadable analysis report 
+- 📥 Downloadable analysis report
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React (Vite, TypeScript, TailwindCSS, ShadCN)
-- **Backend:** Python (FastAPI or Flask)
-- **AI Layer:** Gemini API or Langchain
-- **PDF Parsing:** PyMuPDF
-- **Authentication:** JWT 
-- **Database:** MongoDB
+- **Frontend:**
+  - React + TypeScript
+  - Vite for build tooling
+  - TailwindCSS for styling
+  - shadcn/ui for components
+  - Firebase for authentication
+  - React Router for navigation
+  - React Query for data fetching
+
+- **Backend:**
+  - FastAPI
+  - Google Gemini AI for analysis
+  - pdfplumber for PDF parsing
+  - Python-dotenv for environment management
+  - Uvicorn for ASGI server
 
 ---
 
@@ -35,19 +44,7 @@ git clone https://github.com/Harsh-1711/PromptCV.git
 cd PromptCV
 ```
 
----
-
-### 2. Setup the `.env` File (in `server/`)
-
-```env
-# server/.env
-GEMINI_API_KEY=your_gemini_api_key_here
-PORT=8000
-```
-
----
-
-### 3. Install Backend Dependencies
+### 2. Setup Backend
 
 ```bash
 cd server
@@ -56,17 +53,18 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
----
-
-### 4. Run the Python Backend
-
-```bash
-uvicorn main:app --reload  # Or python main.py based on your framework
+Create a `.env` file in the server directory:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+PORT=8000
 ```
 
----
+Run the backend:
+```bash
+uvicorn app.main:app --reload
+```
 
-### 5. Setup Frontend
+### 3. Setup Frontend
 
 ```bash
 cd ../client
@@ -80,30 +78,34 @@ npm run dev
 
 ```
 PromptCV/
-├── client/             # React + TSX frontend
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       └── ...
-├── server/             # Python backend with AI logic
-│   ├── main.py
-│   ├── resume_parser.py
-│   ├── ats_scoring.py
-│   ├── suggestions.py
-│   ├── utils/
-│   └── .env
-├── README.md
-└── requirements.txt
+├── client/             # React + TypeScript frontend
+│   ├── src/
+│   │   ├── components/ # Reusable UI components
+│   │   ├── pages/     # Page components
+│   │   ├── context/   # React context providers
+│   │   ├── lib/       # Utility functions
+│   │   └── types/     # TypeScript type definitions
+│   ├── public/        # Static assets
+│   └── package.json   # Frontend dependencies
+│
+├── server/            # Python backend
+│   ├── app/
+│   │   ├── main.py           # FastAPI application
+│   │   ├── routes/           # API endpoints
+│   │   ├── services/         # Business logic
+│   │   └── utils/            # Helper functions
+│   ├── requirements.txt      # Python dependencies
+│   └── .env                 # Environment variables
+│
+└── README.md
 ```
 
 ---
 
-## ⚙️ Example API Endpoints
+## ⚙️ API Endpoints
 
-- `POST /upload` → Upload and parse resume
-- `POST /analyze` → Run AI scoring and suggestion engine
-- `GET /score/:id` → Retrieve score breakdown
-- `GET /download/:id` → Download resume report (coming soon)
+- `POST /api/resume/analyze` → Upload and analyze resume
+- Returns ATS scores and suggestions for each section
 
 ---
 
@@ -115,10 +117,10 @@ This project is licensed under the MIT License — see the [LICENSE](./LICENSE) 
 
 ## 🙌 Acknowledgements
 
-- [Gemini API](https://deepmind.google/technologies/gemini/)
-- [LangChain](https://www.langchain.com/)
-- [PyMuPDF](https://pymupdf.readthedocs.io/)
-- [ShadCN UI](https://ui.shadcn.dev/)
+- [Google Gemini AI](https://deepmind.google/technologies/gemini/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ---
 
