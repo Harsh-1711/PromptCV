@@ -1,14 +1,17 @@
 import React, { createContext, useContext, useState } from "react";
 
-export type ResumeData = {
-  fileName: string;
-  atsScore: number;
+export type SectionSuggestion = {
+  original_heading: string;
+  suggested_heading: string;
+  ats_score: number;
   suggestions: string[];
-  sections: {
-    skills: number;
-    experience: number;
-    education: number;
-    overall: number;
+  section_preview: string;
+};
+
+export type ResumeData = {
+  filename: string;
+  suggestions: {
+    [section: string]: SectionSuggestion;
   };
 };
 

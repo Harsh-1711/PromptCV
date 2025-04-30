@@ -29,7 +29,7 @@ const ResumeUpload: React.FC = () => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     const files = e.dataTransfer.files;
     handleFiles(files);
   };
@@ -44,14 +44,19 @@ const ResumeUpload: React.FC = () => {
   const handleFiles = (files: FileList) => {
     if (files && files[0]) {
       const file = files[0];
-      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      
+      const validTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
+
       if (!validTypes.includes(file.type)) {
         toast.error("Please upload a valid resume file (PDF or Word)");
         return;
       }
-      
-      if (file.size > 5 * 1024 * 1024) { // 5MB max
+
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB max
         toast.error("File size should not exceed 5MB");
         return;
       }
@@ -59,7 +64,6 @@ const ResumeUpload: React.FC = () => {
       setSelectedFile(file);
     }
   };
-
   const handleSubmit = async () => {
     if (!selectedFile) {
       toast.error("Please select a file to upload");
@@ -68,11 +72,14 @@ const ResumeUpload: React.FC = () => {
 
     setIsLoading(true);
     setProgress(0);
-    
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
     try {
       // Simulate file upload progress
       const uploadInterval = setInterval(() => {
-        setProgress(prev => {
+        setProgress((prev) => {
           if (prev >= 30) {
             clearInterval(uploadInterval);
             return 30;
@@ -83,7 +90,7 @@ const ResumeUpload: React.FC = () => {
 
       // Simulate processing progress
       const processInterval = setInterval(() => {
-        setProgress(prev => {
+        setProgress((prev) => {
           if (prev >= 80) {
             clearInterval(processInterval);
             return 80;
@@ -92,34 +99,25 @@ const ResumeUpload: React.FC = () => {
         });
       }, 500);
 
-      // In a real app, this would be where you'd upload the file to a server
-      // For now, we'll simulate processing with a timeout
-      await new Promise(resolve => setTimeout(resolve, 4000));
-      
-      // Mock resume data that would normally come from your API
-      const mockResumeData = {
-        fileName: selectedFile.name,
-        atsScore: 78,
-        suggestions: [
-          "Add more quantifiable achievements to your work experience",
-          "Include relevant keywords for the job you're applying for",
-          "Improve your skills section with more technical specifics",
-          "Make your resume more concise by removing unnecessary details"
-        ],
-        sections: {
-          skills: 85,
-          experience: 70,
-          education: 90,
-          overall: 78
-        }
-      };
-      
+      // Actual request to the backend
+      const response = await fetch("http://127.0.0.1:8000/api/resume/analyze", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload resume");
+      }
+
+      const data = await response.json();
+
       setProgress(100);
-      setResumeData(mockResumeData);
+      setResumeData(data);
       toast.success("Resume analyzed successfully!");
-      
+      console.log(data);
+
       // Wait a moment to show the 100% progress before navigating
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       navigate("/results");
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -136,6 +134,83 @@ const ResumeUpload: React.FC = () => {
       setProgress(0);
     }
   };
+
+  // const handleSubmit = async () => {
+  //   if (!selectedFile) {
+  //     toast.error("Please select a file to upload");
+  //     return;
+  //   }
+
+  //   setIsLoading(true);
+  //   setProgress(0);
+
+  //   try {
+  //     // Simulate file upload progress
+  //     const uploadInterval = setInterval(() => {
+  //       setProgress(prev => {
+  //         if (prev >= 30) {
+  //           clearInterval(uploadInterval);
+  //           return 30;
+  //         }
+  //         return prev + 5;
+  //       });
+  //     }, 400);
+
+  //     // Simulate processing progress
+  //     const processInterval = setInterval(() => {
+  //       setProgress(prev => {
+  //         if (prev >= 80) {
+  //           clearInterval(processInterval);
+  //           return 80;
+  //         }
+  //         return prev + 10;
+  //       });
+  //     }, 500);
+
+  //     // In a real app, this would be where you'd upload the file to a server
+  //     // For now, we'll simulate processing with a timeout
+  //     await new Promise(resolve => setTimeout(resolve, 4000));
+
+  //     // Mock resume data that would normally come from your API
+  //     const mockResumeData = {
+  //       fileName: selectedFile.name,
+  //       atsScore: 78,
+  //       suggestions: [
+  //         "Add more quantifiable achievements to your work experience",
+  //         "Include relevant keywords for the job you're applying for",
+  //         "Improve your skills section with more technical specifics",
+  //         "Make your resume more concise by removing unnecessary details"
+  //       ],
+  //       sections: {
+  //         skills: 85,
+  //         experience: 70,
+  //         education: 90,
+  //         overall: 78
+  //       }
+  //     };
+
+  //     setProgress(100);
+  //     setResumeData(mockResumeData);
+  //     toast.success("Resume analyzed successfully!");
+
+  //     // Wait a moment to show the 100% progress before navigating
+  //     await new Promise(resolve => setTimeout(resolve, 500));
+  //     navigate("/results");
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error);
+  //     toast.error("Failed to analyze resume. Please try again.", {
+  //       duration: 4000,
+  //       position: "top-center",
+  //       style: {
+  //         background: "#333",
+  //         color: "#fff",
+  //       },
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //     setProgress(0);
+  //   }
+  // };
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -154,7 +229,7 @@ const ResumeUpload: React.FC = () => {
           <p className="text-muted-foreground text-sm mb-4">
             Drop your resume file here or click to browse
           </p>
-          
+
           <input
             id="file-upload"
             type="file"
@@ -162,17 +237,21 @@ const ResumeUpload: React.FC = () => {
             onChange={handleChange}
             className="hidden"
           />
-          
+
           <label htmlFor="file-upload">
-            <Button variant="outline" className="mb-2" onClick={() => document.getElementById('file-upload')?.click()}>
+            <Button
+              variant="outline"
+              className="mb-2"
+              onClick={() => document.getElementById("file-upload")?.click()}
+            >
               Browse Files
             </Button>
           </label>
-          
+
           <p className="text-xs text-muted-foreground">
             Supports PDF, Word (.doc, .docx) up to 5MB
           </p>
-          
+
           {selectedFile && (
             <div className="mt-4 p-2 bg-secondary rounded text-sm text-left">
               <p className="font-medium">{selectedFile.name}</p>
@@ -182,7 +261,7 @@ const ResumeUpload: React.FC = () => {
             </div>
           )}
         </div>
-        
+
         <div className="mt-6">
           {isLoading && (
             <div className="mb-4">
@@ -192,9 +271,9 @@ const ResumeUpload: React.FC = () => {
               </p>
             </div>
           )}
-          <Button 
-            onClick={handleSubmit} 
-            disabled={!selectedFile || isLoading} 
+          <Button
+            onClick={handleSubmit}
+            disabled={!selectedFile || isLoading}
             className="w-full"
             size="lg"
           >
