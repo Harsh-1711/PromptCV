@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 98%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 224 71.4% 4.1%;
@@ -61,12 +61,153 @@
   }
 }
 
-
-
 body {
   font-family: 'Inter', sans-serif;
 }
 
 .gradient-text {
   @apply bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent;
+  background-size: 200% auto;
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Light theme specific improvements */
+:root {
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Landing page specific styles */
+.hero-section {
+  @apply relative overflow-hidden;
+  background: linear-gradient(135deg, rgba(250, 91, 66, 0.05) 0%, rgba(66, 153, 250, 0.05) 100%);
+}
+
+.hero-section::before {
+  content: '';
+  @apply absolute inset-0;
+  background: radial-gradient(circle at 50% 50%, rgba(250, 91, 66, 0.1) 0%, transparent 50%);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.3; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+.feature-card {
+  @apply relative overflow-hidden transition-all duration-300;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+  backdrop-filter: blur(10px);
+}
+
+.feature-card:hover {
+  @apply shadow-lg transform -translate-y-1;
+}
+
+.feature-card::before {
+  content: '';
+  @apply absolute inset-0;
+  background: linear-gradient(135deg, rgba(250, 91, 66, 0.05) 0%, rgba(66, 153, 250, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.pricing-card {
+  @apply relative overflow-hidden transition-all duration-300;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 1) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.pricing-card:hover {
+  @apply shadow-lg transform -translate-y-1;
+}
+
+.pricing-card.popular {
+  @apply border-2 border-primary/20;
+  background: linear-gradient(135deg, rgba(250, 91, 66, 0.02) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.testimonial-card {
+  @apply relative overflow-hidden transition-all duration-300;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 1) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-card:hover {
+  @apply shadow-md transform -translate-y-1;
+}
+
+.cta-section {
+  @apply relative overflow-hidden;
+  background: linear-gradient(135deg, rgba(250, 91, 66, 0.1) 0%, rgba(66, 153, 250, 0.1) 100%);
+}
+
+.cta-section::before {
+  content: '';
+  @apply absolute inset-0;
+  background: radial-gradient(circle at 50% 50%, rgba(250, 91, 66, 0.15) 0%, transparent 50%);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+/* Card hover effects */
+.card {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.card:hover {
+  @apply shadow-md;
+}
+
+/* Button hover effects */
+button {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Input focus states */
+input:focus, textarea:focus {
+  @apply ring-2 ring-primary/20;
+}
+
+/* Link hover effects */
+a {
+  @apply transition-colors duration-200;
+}
+
+/* Custom scrollbar for light theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/20 rounded-full hover:bg-primary/30;
+}
+
+/* Floating animation for icons */
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }

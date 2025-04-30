@@ -4,7 +4,7 @@ export type SectionSuggestion = {
   original_heading: string;
   suggested_heading: string;
   ats_score: number;
-  suggestions: string[];
+  recommendations: string[];
   section_preview: string;
 };
 
