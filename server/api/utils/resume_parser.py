@@ -17,9 +17,10 @@ def match_heading(line):
             return standard
     return None
 
-def extract_text_from_pdf(file_path):
-    with pdfplumber.open(file_path) as pdf:
+def extract_text_from_pdf(file_stream):
+    with pdfplumber.open(file_stream) as pdf:
         return "\n".join(page.extract_text() or "" for page in pdf.pages)
+
 
 def split_sections(text):
     sections = {}
