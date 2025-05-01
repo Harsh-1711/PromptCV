@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://prompt-cv-backend.vercel.app/api/$1"
+      "destination": "https://promptcv-backend.vercel.app/api/$1"
     }
   ],
   "headers": [
