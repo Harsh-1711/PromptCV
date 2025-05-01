@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes.resume import router as resume_router
+from api.routes.resume import router as resume_router
 import os
 
 app = FastAPI(title="PromptCV API")

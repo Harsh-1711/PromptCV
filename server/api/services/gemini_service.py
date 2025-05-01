@@ -5,12 +5,11 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
+llm = GoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    google_api_key=os.getenv("GEMINI_API_KEY"),
+)
 def get_resume_suggestions(original_heading, section_text):
-    llm = GoogleGenerativeAI(
-        model="gemini-1.5-flash",
-        google_api_key=os.getenv("GEMINI_API_KEY"),
-    )
 
     prompt_template = """Analyze this resume section for ATS compatibility and provide detailed feedback:
 
