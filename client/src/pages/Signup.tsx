@@ -26,7 +26,7 @@ import {
 import Header from "@/components/Header";
 import { UserPlus, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import { auth } from "@/config/firebase";
 
 const signupSchema = z.object({
@@ -57,30 +57,18 @@ const Signup = () => {
     },
   });
 
-  // Add useEffect to handle redirect result
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result) {
-          toast.success("Account created successfully!");
-          navigate("/");
-        }
-      } catch (error: any) {
-        console.error("Google sign-in error:", error);
-        toast.error(error.message || "Failed to sign up with Google. Please try again.");
-      }
-    };
-
-    handleRedirectResult();
-  }, [navigate]);
-
   const onSubmit = async (data: SignupFormValues) => {
     try {
       setIsLoading(true);
-      await signup(data.email, data.password);
-    toast.success("Account created successfully!");
-    navigate("/");
+      const userCredential = await signup(data.email, data.password);
+      // Update the user's display name
+      if (userCredential.user) {
+        await updateProfile(userCredential.user, {
+          displayName: data.name
+        });
+      }
+      toast.success("Account created successfully!");
+      navigate("/");
     } catch (error: any) {
       console.error("Signup error:", error);
       toast.error(error.message || "Failed to create account. Please try again.");
@@ -93,14 +81,31 @@ const Signup = () => {
     try {
       setIsLoading(true);
       const provider = new GoogleAuthProvider();
-      await signInWithRedirect(auth, provider);
+      provider.addScope('profile');
+      provider.addScope('email');
+      
+      const result = await signInWithPopup(auth, provider);
+      if (result.user) {
+        // The user is automatically created in Firebase Auth
+        console.log("Google sign-in successful:", result.user);
+        toast.success("Account created successfully!");
+        navigate("/");
+      }
     } catch (error: any) {
       console.error("Google sign-in error:", error);
-      if (error.code === 'auth/unauthorized-domain') {
-        toast.error("This domain is not authorized. Please contact support.");
+      const errorCode = error?.code;
+      const errorMessage = error?.message || '';
+      
+      if (errorCode === 'auth/popup-closed-by-user') {
+        toast.error('Sign-in was cancelled. Please try again');
+      } else if (errorCode === 'auth/unauthorized-domain') {
+        toast.error('This domain is not authorized. Please contact support');
+      } else if (errorCode === 'auth/popup-blocked') {
+        toast.error('Pop-up was blocked by your browser. Please allow pop-ups for this site');
       } else {
-        toast.error(error.message || "Failed to sign up with Google. Please try again.");
+        toast.error(`Failed to sign up with Google: ${errorMessage}`);
       }
+    } finally {
       setIsLoading(false);
     }
   };

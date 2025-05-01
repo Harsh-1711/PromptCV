@@ -23,9 +23,9 @@ import {
 } from "@/components/ui/card";
 import Header from "@/components/Header";
 import { LogIn, Eye, EyeOff } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { GoogleAuthProvider, signInWithRedirect, getRedirectResult, fetchSignInMethodsForEmail } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config/firebase";
 
 const loginSchema = z.object({
@@ -57,7 +57,7 @@ const Login = () => {
       toast.success("Login successful!");
       navigate("/");
     } catch (error: any) {
-      // console.error("Login error:", error);
+      console.error("Login error:", error);
       toast.error("Invalid credentials");
       form.setValue('password', '');
     } finally {
@@ -65,47 +65,32 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result) {
-          toast.success("Login successful!");
-          navigate("/");
-        }
-      } catch (error: any) {
-        console.error("Google sign-in error:", error);
-        const errorMessage = error?.message || '';
-        
-        if (errorMessage.toLowerCase().includes('popup')) {
-          toast.error('Sign-in was cancelled. Please try again');
-        } else if (errorMessage.toLowerCase().includes('unauthorized')) {
-          toast.error('This domain is not authorized. Please contact support');
-        } else {
-          toast.error('Failed to login with Google. Please try again');
-        }
-      }
-    };
-
-    handleRedirectResult();
-  }, [navigate]);
-
   const handleGoogleSignIn = async () => {
     try {
       setIsLoading(true);
       const provider = new GoogleAuthProvider();
-      await signInWithRedirect(auth, provider);
+      provider.addScope('profile');
+      provider.addScope('email');
+      
+      const result = await signInWithPopup(auth, provider);
+      console.log("Google sign-in successful:", result.user);
+      toast.success("Login successful!");
+      navigate("/");
     } catch (error: any) {
       console.error("Google sign-in error:", error);
+      const errorCode = error?.code;
       const errorMessage = error?.message || '';
       
-      if (errorMessage.toLowerCase().includes('popup')) {
+      if (errorCode === 'auth/popup-closed-by-user') {
         toast.error('Sign-in was cancelled. Please try again');
-      } else if (errorMessage.toLowerCase().includes('unauthorized')) {
+      } else if (errorCode === 'auth/unauthorized-domain') {
         toast.error('This domain is not authorized. Please contact support');
+      } else if (errorCode === 'auth/popup-blocked') {
+        toast.error('Pop-up was blocked by your browser. Please allow pop-ups for this site');
       } else {
-        toast.error('Failed to login with Google. Please try again');
+        toast.error(`Failed to login with Google: ${errorMessage}`);
       }
+    } finally {
       setIsLoading(false);
     }
   };
