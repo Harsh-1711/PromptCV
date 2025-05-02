@@ -26,6 +26,8 @@
     --input: 220 13% 91%;
     --ring: 250 91% 66%;
     --radius: 0.75rem;
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+    --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
   }
 
   .dark {
@@ -71,10 +73,28 @@ body {
   animation: gradient 3s ease infinite;
 }
 
+@layer components {
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-md border border-border shadow-md rounded-xl p-4;
+  }
+
+  .glass-card:hover {
+    @apply shadow-lg;
+  }
+}
+
 @keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Light theme specific improvements */
@@ -99,9 +119,20 @@ body {
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0.3; }
-  100% { transform: scale(1); opacity: 0.5; }
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
 }
 
 .feature-card {
@@ -177,8 +208,19 @@ button {
   @apply transition-all duration-200 ease-in-out;
 }
 
+button:hover,
+button:focus {
+  @apply bg-primary/20 ring-primary/30;
+}
+
+a:hover {
+  @apply text-primary;
+}
+
+
 /* Input focus states */
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   @apply ring-2 ring-primary/20;
 }
 
@@ -198,7 +240,11 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary/20 rounded-full hover:bg-primary/30;
+  @apply bg-primary/20 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/30;
 }
 
 /* Floating animation for icons */
@@ -207,7 +253,15 @@ a {
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }

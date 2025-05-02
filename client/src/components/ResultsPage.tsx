@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useResumeContext } from "@/contexts/ResumeContext";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,15 +39,18 @@ const ResultsPage: React.FC = () => {
   const navigate = useNavigate();
   const [isGeneratingPDF, setIsGeneratingPDF] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState("overview");
+  const [hasInitialized, setHasInitialized] = React.useState(false);
 
   // Create a ref for the upload button
   const uploadButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  React.useEffect(() => {
-    if (!resumeData) {
+  useEffect(() => {
+    // Only redirect if we've initialized and there's no data
+    if (hasInitialized && !resumeData) {
       navigate("/");
     }
-  }, [resumeData, navigate]);
+    setHasInitialized(true);
+  }, [resumeData, navigate, hasInitialized]);
 
   const scoreColor = (score: number) => {
     if (score >= 80) return "text-green-500";

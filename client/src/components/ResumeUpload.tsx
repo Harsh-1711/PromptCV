@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useResumeContext } from "@/contexts/ResumeContext";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/contexts/AuthContext";
+import { Loader2 } from "lucide-react";
 
 const ResumeUpload: React.FC = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -82,8 +83,8 @@ const ResumeUpload: React.FC = () => {
   const getBackendUrl = () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     if (!apiUrl) {
-      console.error('API URL not configured');
-      return '';
+      console.error("API URL not configured");
+      return "";
     }
     return `${apiUrl}/api/resume/analyze`;
   };
@@ -177,7 +178,9 @@ const ResumeUpload: React.FC = () => {
         {!currentUser ? (
           <div className="text-center p-10">
             <LogIn className="w-10 h-10 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-lg font-medium mb-2">Sign in to upload your resume</h3>
+            <h3 className="text-lg font-medium mb-2">
+              Sign in to upload your resume
+            </h3>
             <p className="text-muted-foreground text-sm mb-4">
               Please sign in to access the resume analysis feature
             </p>
@@ -227,11 +230,16 @@ const ResumeUpload: React.FC = () => {
                   onClick={handleSubmit}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Analyzing..." : "Analyze Resume"}
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="animate-spin w-4 h-4 mr-2 inline" />
+                      Analyzing...
+                    </>
+                  ) : (
+                    "Analyze Resume"
+                  )}
                 </Button>
-                {isLoading && (
-                  <Progress value={progress} className="mt-4" />
-                )}
+                {isLoading && <Progress value={progress} className="mt-4" />}
               </div>
             )}
           </div>
