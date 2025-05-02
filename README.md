@@ -23,8 +23,6 @@
   - TailwindCSS for styling
   - shadcn/ui for components
   - Firebase for authentication
-  - React Router for navigation
-  - React Query for data fetching
 
 - **Backend:**
   - FastAPI
