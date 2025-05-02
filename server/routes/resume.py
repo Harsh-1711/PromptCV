@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File
-from api.utils.resume_parser import extract_text_from_pdf, split_sections
-from api.services.gemini_service import get_resume_suggestions
+from utils.resume_parser import extract_text_from_pdf, split_sections
+from services.gemini_service import get_resume_suggestions
 
 router = APIRouter()
 
