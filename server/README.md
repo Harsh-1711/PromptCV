@@ -15,12 +15,10 @@ This is the backend server for PromptCV, an AI-powered resume analysis platform.
 
 ```
 server/
-├── app/
-│   ├── main.py           # FastAPI application entry point
-│   ├── check.py          # Resume checking and analysis logic
-│   ├── routes/           # API route definitions
-│   ├── services/         # Business logic and service layer
-│   └── utils/            # Utility functions and helpers
+│── main.py           # FastAPI application entry point
+├── routes/           # API route definitions
+├── services/         # Business logic and service layer
+├── utils/            # Utility functions and helpers
 ├── requirements.txt      # Python dependencies
 └── .env                 # Environment variables (create this file)
 ```
@@ -36,6 +34,7 @@ server/
 ### Installation
 
 1. Create and activate a virtual environment:
+
 ```bash
 python -m venv venv
 # On Windows:
@@ -45,11 +44,13 @@ source venv/bin/activate
 ```
 
 2. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 3. Create a `.env` file in the server directory with the following variables:
+
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 PORT=8000
@@ -58,7 +59,7 @@ PORT=8000
 ### Running the Server
 
 ```bash
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
 
 The server will start at `http://localhost:8000`
@@ -66,6 +67,7 @@ The server will start at `http://localhost:8000`
 ## 📚 API Documentation
 
 Once the server is running, you can access the interactive API documentation at:
+
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
@@ -79,17 +81,13 @@ Once the server is running, you can access the interactive API documentation at:
 
 ## 🔄 API Endpoints
 
-- `POST /api/upload` - Upload and process resume
-- `POST /api/analyze` - Analyze resume content
-- `GET /api/check` - Check ATS compatibility
-- `GET /api/suggestions` - Get AI-powered suggestions
+- `POST /api/resume/analyze` - Analyze resume content
 
 ## 🔒 Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| GEMINI_API_KEY | Google Gemini API key | Yes |
-| PORT | Server port number | No (default: 8000) |
+| Variable       | Description           | Required |
+| -------------- | --------------------- | -------- |
+| GEMINI_API_KEY | Google Gemini API key | Yes      |
 
 ## 🤝 Contributing
 
@@ -101,4 +99,4 @@ Once the server is running, you can access the interactive API documentation at:
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details. 
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.

@@ -18,13 +18,12 @@
 ## 🛠️ Tech Stack
 
 - **Frontend:**
+
   - React + TypeScript
   - Vite for build tooling
   - TailwindCSS for styling
   - shadcn/ui for components
   - Firebase for authentication
-  - React Router for navigation
-  - React Query for data fetching
 
 - **Backend:**
   - FastAPI
@@ -54,12 +53,14 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file in the server directory:
+
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 PORT=8000
 ```
 
 Run the backend:
+
 ```bash
 uvicorn app.main:app --reload
 ```
