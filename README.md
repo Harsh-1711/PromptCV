@@ -56,7 +56,6 @@ Create a `.env` file in the server directory:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
-PORT=8000
 ```
 
 Run the backend:
@@ -90,11 +89,10 @@ PromptCV/
 │   └── package.json   # Frontend dependencies
 │
 ├── server/            # Python backend
-│   ├── app/
-│   │   ├── main.py           # FastAPI application
-│   │   ├── routes/           # API endpoints
-│   │   ├── services/         # Business logic
-│   │   └── utils/            # Helper functions
+│   ├── main.py           # FastAPI application
+│   ├── routes/           # API endpoints
+│   ├── services/         # Business logic
+│   ├── utils/            # Helper functions
 │   ├── requirements.txt      # Python dependencies
 │   └── .env                 # Environment variables
 │
