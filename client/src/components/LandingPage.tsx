@@ -211,7 +211,7 @@ const LandingPage: React.FC = () => {
             {pricingCards.map((card) => (
               <div
                 key={card.id}
-                className={`bg-card p-8 rounded-lg border transition-all duration-300 ease-in-out ${
+                className={`relative bg-card p-8 rounded-lg border transition-all duration-300 ease-in-out ${
                   hoveredCard === card.id
                     ? "scale-105 shadow-xl border-primary"
                     : hoveredCard
@@ -222,7 +222,7 @@ const LandingPage: React.FC = () => {
                 onMouseLeave={handleCardLeave}
               >
                 {card.popular && (
-                  <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg text-sm">
+                  <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg text-sm z-10">
                     Most Popular
                   </div>
                 )}
@@ -264,7 +264,7 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-white">
+      <section className="py-20 bg-primary/80 text-white">
         <div className="container max-w-7xl text-center">
           <h2 className="text-3xl font-bold mb-4">
             Ready to Optimize Your Resume?
