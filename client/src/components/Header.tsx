@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
@@ -213,6 +213,8 @@ const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
+  const [targetSection, setTargetSection] = useState<string | null>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
   // Add useEffect to handle body scroll
   useEffect(() => {
@@ -222,7 +224,6 @@ const Header: React.FC = () => {
       document.body.style.overflow = 'unset';
     }
 
-    // Cleanup function to ensure scroll is re-enabled when component unmounts
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -239,7 +240,8 @@ const Header: React.FC = () => {
 
   const scrollToSection = (sectionId: string) => {
     if (!isHomePage) {
-      navigate(`/#${sectionId}`);
+      setTargetSection(sectionId);
+      navigate('/', { replace: true });
       return;
     }
 
@@ -257,12 +259,17 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // Handle hash-based navigation
+  // Handle scroll after navigation
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1);
-      if (hash) {
-        const element = document.getElementById(hash);
+    if (isHomePage && targetSection) {
+      // Clear any existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      // Set a new timeout
+      scrollTimeoutRef.current = setTimeout(() => {
+        const element = document.getElementById(targetSection);
         if (element) {
           const headerOffset = 80;
           const elementPosition = element.getBoundingClientRect().top;
@@ -273,19 +280,16 @@ const Header: React.FC = () => {
             behavior: "smooth",
           });
         }
-      }
-    };
+        setTargetSection(null);
+      }, 100);
 
-    // Initial check for hash
-    handleHashChange();
-
-    // Listen for hash changes
-    window.addEventListener("hashchange", handleHashChange);
-
-    return () => {
-      window.removeEventListener("hashchange", handleHashChange);
-    };
-  }, []);
+      return () => {
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+      };
+    }
+  }, [isHomePage, targetSection]);
 
   return (
     <header

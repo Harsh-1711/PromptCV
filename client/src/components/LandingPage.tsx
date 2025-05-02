@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ResumeUpload from "./ResumeUpload";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -58,14 +58,6 @@ const LandingPage: React.FC = () => {
       buttonText: "Contact Sales",
     },
   ];
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 100);
-
-    return () => clearTimeout(timeout);
-  }, []);
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
