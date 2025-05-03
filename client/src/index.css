@@ -208,9 +208,8 @@ button {
   @apply transition-all duration-200 ease-in-out;
 }
 
-button:hover,
-button:focus {
-  @apply bg-primary/20 ring-primary/30;
+button:hover{
+  @apply bg-primary/20 ring-primary/30 rounded-md;
 }
 
 a:hover {

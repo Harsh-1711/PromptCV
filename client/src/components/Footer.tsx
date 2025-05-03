@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Pricing
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/about"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   About
@@ -60,7 +60,8 @@ const Footer: React.FC = () => {
                 <a
                   href="https://evalground.com/blog/ats-recruitment-pros-and-cons/#:~:text=ATS%20not%20only%20helps%20you,information%20at%20the%20same%20time."
                   className="text-muted-foreground hover:text-foreground transition-colors"
-                  target="_blank" rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Blog
                 </a>
@@ -69,25 +70,24 @@ const Footer: React.FC = () => {
                 <a
                   href="https://careerservices.fas.harvard.edu/resources/create-a-strong-resume/"
                   className="text-muted-foreground hover:text-foreground transition-colors"
-                  target="_blank" rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Resume Tips
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/help"
                   className="text-muted-foreground hover:text-foreground transition-colors"
-                  target="_blank" rel="noopener noreferrer"
                 >
                   Help Center
                 </a>
               </li>
               <li>
                 <a
-                    href="https://wa.me/919354182834?text=Hello%2C%20I%20am%20interested%20in%20your%20services" 
+                  href="/help"
                   className="text-muted-foreground hover:text-foreground transition-colors"
-                  target="_blank" rel="noopener noreferrer"
                 >
                   Contact Us
                 </a>

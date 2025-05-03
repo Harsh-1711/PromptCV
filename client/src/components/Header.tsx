@@ -144,16 +144,20 @@ const ProfileSettingsDialog = ({
         </DialogHeader>
         <div className="flex border-b mb-4">
           <button
-            className={`px-4 py-2 ${
-              activeTab === "profile" ? "border-b-2 border-primary" : ""
+            className={`px-4 py-2 rounded-md mr-0.5${
+              activeTab === "profile"
+                ? "border-b-2 border-primary rounded-md mr-0.5"
+                : ""
             }`}
             onClick={() => setActiveTab("profile")}
           >
             Profile
           </button>
           <button
-            className={`px-4 py-2 ${
-              activeTab === "password" ? "border-b-2 border-primary" : ""
+            className={`px-4 py-2  rounded-md${
+              activeTab === "password"
+                ? "border-b-2 border-primary rounded-md"
+                : ""
             }`}
             onClick={() => setActiveTab("password")}
           >
