@@ -11,6 +11,8 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import About from "./pages/About";
+import LearnMore from "./pages/LearnMore";
+import HelpCenter from "./pages/HelpCenter";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -27,6 +29,8 @@ const App = () => (
             >
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/learn-more" element={<LearnMore />} />
+                <Route path="/help" element={<HelpCenter />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/results" element={<Results />} />
                 <Route path="/login" element={<Login />} />
