@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ResultsPage from "@/components/ResultsPage";
+import ResultsPage from "@/pages/ResultsPage";
 
 const Results = () => {
   return (

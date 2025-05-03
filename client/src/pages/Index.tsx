@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import LandingPage from "@/components/LandingPage";
+import LandingPage from "@/pages/LandingPage";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLocation } from "react-router-dom";
@@ -16,7 +16,8 @@ const Index: React.FC = () => {
         if (element) {
           const headerOffset = 80;
           const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
 
           window.scrollTo({
             top: offsetPosition,
