@@ -16,6 +16,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
       },
     },
+    sourcemap: true,
+    assetsInlineLimit: 0
   },
   publicDir: 'public',
 }); 

@@ -2,7 +2,7 @@
     "name": "PromptCV",
     "short_name": "PromptCV",
     "description": "AI-powered resume analysis and optimization tool",
-    "start_url": "https://prompt-cv.vercel.app/",
+    "start_url": "/",
     "scope": "/",
     "display": "standalone",
     "background_color": "#ffffff",
