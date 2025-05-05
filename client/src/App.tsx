@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ResumeProvider } from "./contexts/ResumeContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Results from "./pages/Results";
 import NotFound from "./pages/NotFound";
@@ -13,6 +14,7 @@ import Signup from "./pages/Signup";
 import About from "./pages/About";
 import LearnMore from "./pages/LearnMore";
 import HelpCenter from "./pages/HelpCenter";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -22,11 +24,8 @@ const App = () => (
         <AuthProvider>
           <ResumeProvider>
             <Toaster position="top-center" />
-            <BrowserRouter
-              basename="/"
-              window={window}
-              future={{ v7_startTransition: true }}
-            >
+            <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/learn-more" element={<LearnMore />} />
@@ -35,7 +34,6 @@ const App = () => (
                 <Route path="/results" element={<Results />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

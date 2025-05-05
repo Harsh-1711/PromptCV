@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ResumeUpload from "../components/ResumeUpload";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, ArrowDown } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const LandingPage: React.FC = () => {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [showUploadPointer, setShowUploadPointer] = useState(false);
+  const uploadRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
   const handleCardHover = (cardId: string) => {
     setHoveredCard(cardId);
   };
-  const navigate = useNavigate();
 
   const handleCardLeave = () => {
     setHoveredCard(null);
+  };
+
+  const handleTryItFree = () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    setShowUploadPointer(true);
+    uploadRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    
+    // Hide the pointer after animation
+    setTimeout(() => {
+      setShowUploadPointer(false);
+    }, 3000);
   };
 
   const pricingCards = [
@@ -77,7 +98,11 @@ const LandingPage: React.FC = () => {
                 optimization score to land more interviews.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="text-lg px-8">
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8"
+                  onClick={handleTryItFree}
+                >
                   Try it Free
                 </Button>
                 <Button
@@ -90,15 +115,54 @@ const LandingPage: React.FC = () => {
                 </Button>
               </div>
             </div>
-            <div className="flex justify-center lg:justify-end">
-              <div className="bg-gradient-to-b from-background to-background/0 dark:from-background dark:to-background/0 p-1 rounded-xl animate-slide-up">
+            <div className="flex justify-center lg:justify-end relative" ref={uploadRef}>
+              <AnimatePresence>
+                {showUploadPointer && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute -top-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+                  >
+                    <motion.div
+                      initial={{ scale: 0.9 }}
+                      animate={{ scale: 1 }}
+                      transition={{ 
+                        duration: 0.5,
+                        repeat: Infinity,
+                        repeatType: "reverse" 
+                      }}
+                      className="bg-primary text-white px-6 py-3 rounded-lg mb-2 text-sm font-medium shadow-lg"
+                    >
+                      Upload your resume here!
+                    </motion.div>
+                    <motion.div
+                      animate={{ y: [0, 10, 0] }}
+                      transition={{ 
+                        duration: 1,
+                        repeat: Infinity,
+                        repeatType: "loop"
+                      }}
+                    >
+                      <ArrowDown className="w-8 h-8 text-primary" />
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-gradient-to-b from-background to-background/0 dark:from-background dark:to-background/0 p-1 rounded-xl"
+              >
                 <div className="bg-card rounded-lg p-6 shadow-xl border border-border">
                   <h2 className="text-2xl font-semibold mb-6 text-center">
                     Analyze Your Resume
                   </h2>
                   <ResumeUpload />
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

@@ -1,7 +1,10 @@
 import React from "react";
 import Logo from "./Logo";
+import { useNavigate } from "react-router-dom";
 
 const Footer: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <footer className="border-t border-border bg-background py-8 mt-auto">
       <div className="container max-w-7xl">
@@ -19,36 +22,28 @@ const Footer: React.FC = () => {
             <h3 className="font-medium text-lg mb-3">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                <button
+                  onClick={() => navigate('/')}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-left w-full"
                 >
                   Home
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                <button
+                  onClick={() => navigate('/learn-more')}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-left w-full"
                 >
                   Features
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="/"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                <button
+                  onClick={() => navigate('/about')}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-left w-full"
                 >
                   About
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -77,20 +72,12 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="/help"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                <button
+                  onClick={() => navigate('/help')}
+                  className="text-muted-foreground hover:text-foreground transition-colors text-left w-full"
                 >
                   Help Center
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/help"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Contact Us
-                </a>
+                </button>
               </li>
             </ul>
           </div>
