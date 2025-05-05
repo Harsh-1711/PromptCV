@@ -6,35 +6,39 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   build: {
+    commonjsOptions: {
+      include: [],
+      transformMixedEsModules: true
+    },
     rollupOptions: {
-      external: [/@rollup\/rollup-linux-*/],
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ui: [
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-checkbox',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-label',
-            '@radix-ui/react-progress',
-            '@radix-ui/react-separator',
-            '@radix-ui/react-slot',
-            '@radix-ui/react-tabs',
-            '@radix-ui/react-tooltip'
-          ]
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) {
+              return 'react-vendor';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'radix-vendor';
+            }
+            return 'vendor';
+          }
         }
       }
     },
-    target: 'es2015',
+    target: 'esnext',
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
-    minify: 'terser'
+    minify: 'esbuild',
+    emptyOutDir: true
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+    exclude: ['@rollup/rollup-linux-x64-gnu']
   }
 }); 
