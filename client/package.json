@@ -4,7 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=18.x"
+    "node": "18.x"
+  },
+  "overrides": {
+    "rollup": {
+      "@rollup/rollup-linux-x64-gnu": "4.6.1"
+    }
   },
   "scripts": {
     "dev": "vite",
