@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": "18.x"
+    "node": ">=18.x"
   },
   "scripts": {
     "dev": "vite",
@@ -31,6 +31,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "firebase": "^11.6.1",
+    "framer-motion": "^12.9.4",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.1",
     "lucide-react": "^0.323.0",
@@ -47,7 +48,6 @@
     "zod": "^3.24.3"
   },
   "devDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.6.1",
     "@types/jspdf": "^2.0.0",
     "@types/node": "^20.17.32",
     "@types/react": "^18.2.55",
@@ -64,8 +64,5 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
     "vite": "^5.1.0"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   }
 }
