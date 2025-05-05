@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd client && ROLLUP_SKIP_NODE_RESOLVE=true npm install --no-optional && npm run build",
+  "buildCommand": "ROLLUP_SKIP_NODE_RESOLVE=true npm install --no-optional && npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
