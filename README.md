@@ -28,7 +28,7 @@
 - **Backend:**
   - FastAPI
   - Google Gemini AI for analysis
-  - pdfplumber for PDF parsing
+  - pdfplumber for PDF parsing.
   - Python-dotenv for environment management
   - Uvicorn for ASGI server
 
